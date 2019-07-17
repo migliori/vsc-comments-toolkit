@@ -1,0 +1,7 @@
+out
+node_modules
+.vscode-test/
+psd
+*.vsix
+comments-toolkit-logo.ai
+vsc-extension-quickstart.md
