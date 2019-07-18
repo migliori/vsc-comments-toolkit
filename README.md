@@ -22,11 +22,11 @@ Comment-Snippets has been widely inspired by [Sublime Text's Comment-Snippets pl
 
 ## Usage
 
-Start typing "*comment*", the auto-complete list will appear.
+Start typing "*comm:*", the auto-complete list will appear.
 
 ## File types & Languages
 
-The completions are currently available for HTML, PHP, Javascript, CSS & SCSS files.
+The completions are currently available for HTML, PHP, Javascript, Typescript, CSS & SCSS files.
 
 If you want me to add others languages / file types please [open an issue](https://github.com/migliori/vsc-comments-toolkit/issues)
 

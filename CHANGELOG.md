@@ -8,3 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## v1.0.0
 
 - Initial release
+
+## v1.0.1
+
+- Add subsections comments
+- add Typescript support
+- loop png preview

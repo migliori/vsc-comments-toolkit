@@ -20,45 +20,57 @@ export function activate(context: vscode.ExtensionContext) {
 	=          Register All the coments           =
 	=============================================*/
 
-	const commentSection = new vscode.CompletionItem('comment:section', vscode.CompletionItemKind.Text);
-	commentSection.insertText = new vscode.SnippetString("/*=============================================\n=            ${1:Section comment block}            =\n=============================================*/\n\n${2:}\n\n/*=====  End of ${1}  ======*/");
-	commentSection.documentation = "/*=============================\n=               Section comment block               =\n=============================*/\n\n\n\n/*===  End of Section comment block  ====*/";
+	const commentSection = new vscode.CompletionItem('comm:section', vscode.CompletionItemKind.Text);
+	commentSection.insertText = new vscode.SnippetString("/*=============================================\n=                   ${1:Section}                   =\n=============================================*/\n\n${2:}\n\n/*============  End of ${1}  =============*/");
+	commentSection.documentation = "/*=============================\n=                            Section                            =\n=============================*/\n\n\n\n/*========  End of Section  =========*/";
 
-	const commentSectionHeader = new vscode.CompletionItem('comment:section-header', vscode.CompletionItemKind.Text);
-	commentSectionHeader.insertText = new vscode.SnippetString("/*=============================================\n=            ${1:Section comment block}            =\n=============================================*/\n\n");
-	commentSectionHeader.documentation = "/*=============================\n=               Section comment block               =\n=============================*/\n\n";
+	const commentSectionHeader = new vscode.CompletionItem('comm:section-header', vscode.CompletionItemKind.Text);
+	commentSectionHeader.insertText = new vscode.SnippetString("/*=============================================\n=                   ${1:Section}                   =\n=============================================*/\n\n");
+	commentSectionHeader.documentation = "/*=============================\n=                            Section                            =\n=============================*/\n\n";
 
-	const commentSectionFooter = new vscode.CompletionItem('comment:section-footer', vscode.CompletionItemKind.Text);
-	commentSectionFooter.insertText = new vscode.SnippetString("\n/*=====  End of ${1:Section comment block}  ======*/");
-	commentSectionFooter.documentation = "\n/*===  End of Section comment block  ====*/";
+	const commentSectionFooter = new vscode.CompletionItem('comm:section-footer', vscode.CompletionItemKind.Text);
+	commentSectionFooter.insertText = new vscode.SnippetString("\n/*============  End of ${1:Section}  =============*/");
+	commentSectionFooter.documentation = "\n/*========  End of Section  =========*/";
 
-	const commentSimple = new vscode.CompletionItem('comment:simple', vscode.CompletionItemKind.Text);
+	const commentSubsection = new vscode.CompletionItem('comm:subsection', vscode.CompletionItemKind.Text);
+	commentSubsection.insertText = new vscode.SnippetString("/* ${1:Subsection}\n-------------------------------------------------- */\n\n${2:}\n\n/* End of ${1}\n-------------------------------------------------- */");
+	commentSubsection.documentation = "/* Subsection\n-------------------------------------------------- */\n\n\n\n/* End of Subsection\n-------------------------------------------------- */";
+
+	const commentSubsectionHeader = new vscode.CompletionItem('comm:subsection-header', vscode.CompletionItemKind.Text);
+	commentSubsectionHeader.insertText = new vscode.SnippetString("/* ${1:Subsection}\n-------------------------------------------------- */\n");
+	commentSubsectionHeader.documentation = "/* Subsection\n-------------------------------------------------- */\n";
+
+	const commentSubsectionFooter = new vscode.CompletionItem('comm:subsection-footer', vscode.CompletionItemKind.Text);
+	commentSubsectionFooter.insertText = new vscode.SnippetString("\n/* End of ${1:Subsection}\n-------------------------------------------------- */");
+	commentSubsectionFooter.documentation = "\n/* End of Subsection\n-------------------------------------------------- */";
+
+	const commentSimple = new vscode.CompletionItem('comm:simple', vscode.CompletionItemKind.Text);
 	commentSimple.insertText = new vscode.SnippetString("/* ${1:Comment} */");
 	commentSimple.documentation = "/* Comment */";
 
-	const commentBlock = new vscode.CompletionItem('comment:block', vscode.CompletionItemKind.Text);
-	commentBlock.insertText = new vscode.SnippetString("/**\n*\n* ${1:Block comment}\n*\n*/");
-	commentBlock.documentation = "/**\n*\n* Block comment\n*\n*/";
+	const commentBlock = new vscode.CompletionItem('comm:block', vscode.CompletionItemKind.Text);
+	commentBlock.insertText = new vscode.SnippetString("/**\n*\n* ${1:Block}\n*\n*/");
+	commentBlock.documentation = "/**\n*\n* Block\n*\n*/";
 
-	const commentTodo = new vscode.CompletionItem('comment:todo', vscode.CompletionItemKind.Text);
+	const commentTodo = new vscode.CompletionItem('comm:todo', vscode.CompletionItemKind.Text);
 	commentTodo.insertText = new vscode.SnippetString("/**\n\n    TODO:\n    - ${1:First todo item}\n    - ${2:Second todo item}\n\n*/");
 	commentTodo.documentation = "/**\n\n    TODO:\n    - First todo item\n    - Second todo item\n\n*/";
 
-	const commentHtmlSection = new vscode.CompletionItem('comment:html-section', vscode.CompletionItemKind.Text);
-	commentHtmlSection.insertText = new vscode.SnippetString("<!--=====================================\n=            ${1:Section comment}            =\n======================================-->\n\n${2}\n\n<!--====  End of ${1}  ====-->");
-	commentHtmlSection.documentation = "<!--=============================\n=                 Section comment block                 =\n=============================-->\n\n\n\n<!--=== End of Section comment block ====-->";
+	const commentHtmlSection = new vscode.CompletionItem('comm:html-section', vscode.CompletionItemKind.Text);
+	commentHtmlSection.insertText = new vscode.SnippetString("<!--=====================================\n=                ${1:Section}                =\n======================================-->\n\n${2}\n\n<!--=======  End of ${1}  ========-->");
+	commentHtmlSection.documentation = "<!--=============================\n=                             Section                             =\n=============================-->\n\n\n\n<!--======== End of Section =========-->";
 
-	const commentHtmlSectionHeader = new vscode.CompletionItem('comment:html-section-header', vscode.CompletionItemKind.Text);
-	commentHtmlSectionHeader.insertText = new vscode.SnippetString("<!--=====================================\n=            ${1:Section comment}            =\n======================================-->\n\n");
-	commentHtmlSectionHeader.documentation = "<!--=============================\n=                 Section comment block                 =\n=============================-->\n";
+	const commentHtmlSectionHeader = new vscode.CompletionItem('comm:html-section-header', vscode.CompletionItemKind.Text);
+	commentHtmlSectionHeader.insertText = new vscode.SnippetString("<!--=====================================\n=                ${1:Section}                =\n======================================-->\n\n");
+	commentHtmlSectionHeader.documentation = "<!--=============================\n=                             Section                             =\n=============================-->\n";
 
-	const commentHtmlSectionFooter = new vscode.CompletionItem('comment:html-section-footer', vscode.CompletionItemKind.Text);
-	commentHtmlSectionFooter.insertText = new vscode.SnippetString("\n<!--====  End of ${1:Section comment}  ====-->");
-	commentHtmlSectionFooter.documentation = "\n<!--=== End of Section comment block ====-->";
+	const commentHtmlSectionFooter = new vscode.CompletionItem('comm:html-section-footer', vscode.CompletionItemKind.Text);
+	commentHtmlSectionFooter.insertText = new vscode.SnippetString("\n<!--=======  End of ${1:Section}  ========-->");
+	commentHtmlSectionFooter.documentation = "\n<!--======== End of Section =========-->";
 
-	const commentHtmlSimple = new vscode.CompletionItem('comment:html-simple', vscode.CompletionItemKind.Text);
-	commentHtmlSimple.insertText = new vscode.SnippetString("<!-- ${1:html comment} -->");
-	commentHtmlSimple.documentation = "<!-- html comment -->";
+	const commentHtmlSimple = new vscode.CompletionItem('comm:html-simple', vscode.CompletionItemKind.Text);
+	commentHtmlSimple.insertText = new vscode.SnippetString("<!-- ${1:html} -->");
+	commentHtmlSimple.documentation = "<!-- html -->";
 
 	/*=====  End of Register All the coments  ======*/
 
@@ -70,10 +82,10 @@ export function activate(context: vscode.ExtensionContext) {
 		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
 			// return all completion items as array
 			return [
-				commentSection, commentSectionHeader, commentSectionFooter, commentSimple, commentBlock, commentTodo
+				commentSection, commentSectionHeader, commentSectionFooter, commentSubsection, commentSubsectionHeader, commentSubsectionFooter, commentSimple, commentBlock, commentTodo
 			];
 		}
-	}, 'comment');
+	}, 'comm');
 
 	let providerHtml = vscode.languages.registerCompletionItemProvider('html', {
 		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
@@ -82,40 +94,50 @@ export function activate(context: vscode.ExtensionContext) {
 				commentHtmlSection, commentHtmlSectionHeader, commentHtmlSectionFooter, commentHtmlSimple
 			];
 		}
-	}, 'comment');
+	}, 'comm');
 
 	let providerJavascript = vscode.languages.registerCompletionItemProvider('javascript', {
 		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
 			// return all completion items as array
 			return [
-				commentSection, commentSectionHeader, commentSectionFooter, commentSimple, commentBlock, commentTodo
+				commentSection, commentSectionHeader, commentSectionFooter, commentSubsection, commentSubsectionHeader, commentSubsectionFooter, commentSimple, commentBlock, commentTodo
 			];
 		}
-	}, 'comment');
+	}, 'comm');
 
 	let providerPhp = vscode.languages.registerCompletionItemProvider('php', {
 		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
 			// return all completion items as array
 			return [
-				commentSection, commentSectionHeader, commentSectionFooter, commentSimple, commentBlock, commentTodo
+				commentSection, commentSectionHeader, commentSectionFooter, commentSubsection, commentSubsectionHeader, commentSubsectionFooter, commentSimple, commentBlock, commentTodo
 			];
 		}
-	}, 'comment');
+	}, 'comm');
 
 	let providerScss = vscode.languages.registerCompletionItemProvider('scss', {
 		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
 			// return all completion items as array
 			return [
-				commentSection, commentSectionHeader, commentSectionFooter, commentSimple, commentBlock, commentTodo
+				commentSection, commentSectionHeader, commentSectionFooter, commentSubsection, commentSubsectionHeader, commentSubsectionFooter, commentSimple, commentBlock, commentTodo
 			];
 		}
-	}, 'comment');
+	}, 'comm');
+
+	let providerTypescript = vscode.languages.registerCompletionItemProvider('typescript', {
+		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
+			// return all completion items as array
+			return [
+				commentSection, commentSectionHeader, commentSectionFooter, commentSubsection, commentSubsectionHeader, commentSubsectionFooter, commentSimple, commentBlock, commentTodo
+			];
+		}
+	}, 'comm');
 
 	context.subscriptions.push(providerCss);
 	context.subscriptions.push(providerHtml);
 	context.subscriptions.push(providerJavascript);
 	context.subscriptions.push(providerPhp);
 	context.subscriptions.push(providerScss);
+	context.subscriptions.push(providerTypescript);
 }
 
 // this method is called when your extension is deactivated
