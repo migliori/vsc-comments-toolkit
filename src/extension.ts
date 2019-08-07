@@ -132,7 +132,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	}, 'comm');
 	
-	let providerVue = vscode.languages.registerCompletionItemProvider('typescript', {
+	let providerVue = vscode.languages.registerCompletionItemProvider('vue', {
 		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
 			// return all completion items as array
 			return [
