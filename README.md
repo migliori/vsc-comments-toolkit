@@ -26,7 +26,7 @@ Start typing "*comm:*", the auto-complete list will appear.
 
 ## File types & Languages
 
-The completions are currently available for HTML, PHP, Javascript, Typescript, CSS & SCSS files.
+The completions are currently available for HTML, PHP, Javascript, Typescript, CSS, SCSS, C#, Vuejs files.
 
 If you want me to add others languages / file types please [open an issue](https://github.com/migliori/vsc-comments-toolkit/issues)
 

@@ -14,3 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add subsections comments
 - add Typescript support
 - loop png preview
+
+## v1.0.2
+
+- Add C# and vuejs
