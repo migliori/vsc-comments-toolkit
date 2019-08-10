@@ -140,6 +140,15 @@ export function activate(context: vscode.ExtensionContext) {
 			];
 		}
 	}, 'comm');
+	
+	let providerCSharp = vscode.languages.registerCompletionItemProvider('csharp', {
+		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
+			// return all completion items as array
+			return [
+				commentSection, commentSectionHeader, commentSectionFooter, commentSubsection, commentSubsectionHeader, commentSubsectionFooter, commentSimple, commentBlock, commentTodo
+			];
+		}
+	}, 'comm');
 
 	context.subscriptions.push(providerCss);
 	context.subscriptions.push(providerHtml);
@@ -148,6 +157,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(providerScss);
 	context.subscriptions.push(providerTypescript);
 	context.subscriptions.push(providerVue);
+	context.subscriptions.push(providerCSharp);
 }
 
 // this method is called when your extension is deactivated
