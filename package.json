@@ -2,9 +2,9 @@
 	"name": "comments-toolkit",
 	"displayName": "Comments Toolkit",
 	"description": "Completions to create some fancy comments in Visual Studio Code",
-	"version": "1.0.2",
+	"version": "1.1.0",
 	"engines": {
-		"vscode": "^1.36.0"
+		"vscode": "^1.93.0"
 	},
 	"publisher": "Miglisoft",
 	"keywords": [
@@ -27,21 +27,96 @@
 		"Other"
 	],
 	"activationEvents": [
-		"*"
+		"onLanguage:abap",
+		"onLanguage:bat",
+		"onLanguage:bibtex",
+		"onLanguage:clojure",
+		"onLanguage:coffeescript",
+		"onLanguage:c",
+		"onLanguage:cpp",
+		"onLanguage:csharp",
+		"onLanguage:cuda-cpp",
+		"onLanguage:css",
+		"onLanguage:diff",
+		"onLanguage:dockerfile",
+		"onLanguage:fsharp",
+		"onLanguage:git-commit",
+		"onLanguage:git-rebase",
+		"onLanguage:go",
+		"onLanguage:groovy",
+		"onLanguage:handlebars",
+		"onLanguage:html",
+		"onLanguage:ini",
+		"onLanguage:java",
+		"onLanguage:javascript",
+		"onLanguage:javascriptreact",
+		"onLanguage:json",
+		"onLanguage:jsonc",
+		"onLanguage:latex",
+		"onLanguage:less",
+		"onLanguage:lua",
+		"onLanguage:makefile",
+		"onLanguage:markdown",
+		"onLanguage:objective-c",
+		"onLanguage:objective-cpp",
+		"onLanguage:perl",
+		"onLanguage:perl6",
+		"onLanguage:php",
+		"onLanguage:plaintext",
+		"onLanguage:powershell",
+		"onLanguage:jade",
+		"onLanguage:python",
+		"onLanguage:r",
+		"onLanguage:razor",
+		"onLanguage:ruby",
+		"onLanguage:rust",
+		"onLanguage:scss",
+		"onLanguage:sass",
+		"onLanguage:shaderlab",
+		"onLanguage:shellscript",
+		"onLanguage:sql",
+		"onLanguage:swift",
+		"onLanguage:typescript",
+		"onLanguage:typescriptreact",
+		"onLanguage:tex",
+		"onLanguage:vb",
+		"onLanguage:xml",
+		"onLanguage:xsl",
+		"onLanguage:yaml"
 	],
+	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "Comment Toolkit Configuration",
+			"properties": {
+				"commentToolkit.baseLength": {
+					"type": "number",
+					"default": 40,
+					"description": "Base length for comment lines."
+				},
+				"commentToolkit.separator": {
+					"type": "string",
+					"default": "=",
+					"description": "Separator character for comment lines."
+				}
+			}
+		}
+	},
 	"main": "./out/extension.js",
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
+		"clean": "rimraf out",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
-		"postinstall": "node ./node_modules/vscode/bin/install",
 		"test": "npm run compile && node ./node_modules/vscode/bin/test"
 	},
 	"devDependencies": {
-		"typescript": "^3.3.1",
-		"vscode": "^1.1.37",
-		"tslint": "^5.12.1",
+		"@types/mocha": "^2.2.42",
 		"@types/node": "^10.12.21",
-		"@types/mocha": "^2.2.42"
+		"@types/vscode": "^1.93.0",
+		"rimraf": "^6.0.1",
+		"tslint": "^5.12.1",
+		"typescript": "^5.6.2",
+		"vscode": "^1.1.37"
 	}
 }

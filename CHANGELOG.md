@@ -18,3 +18,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## v1.0.2
 
 - Add C# and vuejs
+
+## v1.1.0
+
+- Refactored the extension to improve maintainability and readability.
+- Added detailed documentation for the extension's features and main components.
+- Defined `commentStyles` for various programming languages.
+- Defined `globalPatterns` for different comment patterns.
+- Introduced functions like `interpretSpaces`, `calculateContentLength`, and `adjustLineLength`.
+- Enhanced the `activate` function to handle more functionalities and register providers more comprehensively.
+- Improved caching mechanism for generated comment patterns.
+- Added logging functionality with different log levels (info, warning, error).
