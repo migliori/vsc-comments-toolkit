@@ -29,3 +29,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced the `activate` function to handle more functionalities and register providers more comprehensively.
 - Improved caching mechanism for generated comment patterns.
 - Added logging functionality with different log levels (info, warning, error).
+
+## v1.2.0
+
+- Added support for additional programming languages in `commentStyles`.
+- Introduced `getConfiguration` function to retrieve extension settings.
+- Enhanced `globalPatterns` with new comment patterns.
+- Improved `log` function for better logging.
+- Added `getHtmlParser` function to retrieve HTML parser instance.
+- Implemented `isInsidePHP` function to detect PHP code within mixed PHP/HTML documents.
+- Added `findLanguageFromNode` function to determine language from syntax node.
+- Enhanced `detectLanguageAtPosition` function for better language detection.
+- Improved `interpretSpaces` function to handle custom space markers.
+- Enhanced `calculateContentLength` function to process placeholders and spaces.

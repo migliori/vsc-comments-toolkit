@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
+		"esModuleInterop": true,
 		"target": "es6",
 		"outDir": "out",
 		"lib": [
@@ -10,11 +11,16 @@
 		"sourceMap": true,
 		"rootDir": "src",
 		"strict": true,   /* enable all strict type-checking options */
-		"skipLibCheck": true /* Skip type checking of declaration files */
+		"skipLibCheck": true, /* Skip type checking of declaration files */
 		/* Additional Checks */
 		// "noImplicitReturns": true, /* Report error when not all code paths in function return a value. */
 		// "noFallthroughCasesInSwitch": true, /* Report errors for fallthrough cases in switch statement. */
 		// "noUnusedParameters": true,  /* Report errors on unused parameters. */
+		"types": [
+			"@types/node",
+			"@types/vscode",
+			"mocha"
+		]
 	},
 	"exclude": [
 		"node_modules",

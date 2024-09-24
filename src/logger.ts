@@ -1,6 +1,13 @@
 import * as vscode from 'vscode';
 
-class Logger {
+// Define the ILogger interface
+interface ILogger {
+    info(message: string): void;
+    warn(message: string): void;
+    error(message: string): void;
+}
+
+class Logger implements ILogger {
     private outputChannel: vscode.OutputChannel;
 
     constructor(channelName: string) {
@@ -11,7 +18,7 @@ class Logger {
         this.log('INFO', message);
     }
 
-    warning(message: string) {
+    warn(message: string) {
         this.log('WARNING', message);
     }
 
@@ -25,4 +32,5 @@ class Logger {
     }
 }
 
-export const logger = new Logger('Comment Toolkit');
+// Ensure the logger object is typed as ILogger
+export const logger: ILogger = new Logger('Comment Toolkit');

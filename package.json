@@ -2,7 +2,7 @@
 	"name": "comments-toolkit",
 	"displayName": "Comments Toolkit",
 	"description": "Completions to create some fancy comments in Visual Studio Code",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"engines": {
 		"vscode": "^1.93.0"
 	},
@@ -108,15 +108,22 @@
 		"clean": "rimraf out",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
-		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+		"test": "npm run compile && NODE_ENV=test node ./node_modules/vscode/bin/test --version 1.93.0"
 	},
 	"devDependencies": {
+		"@types/lodash": "^4.17.7",
 		"@types/mocha": "^2.2.42",
 		"@types/node": "^10.12.21",
+		"@types/sinon": "^17.0.3",
 		"@types/vscode": "^1.93.0",
 		"rimraf": "^6.0.1",
 		"tslint": "^5.12.1",
 		"typescript": "^5.6.2",
 		"vscode": "^1.1.37"
+	},
+	"dependencies": {
+		"lodash": "^4.17.21",
+		"tree-sitter": "^0.21.1",
+		"tree-sitter-html": "^0.23.0"
 	}
 }
