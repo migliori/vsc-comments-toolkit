@@ -21,12 +21,9 @@ Comments Toolkit provides comments auto-completions (snippets) for various progr
 To customize the behavior of the Comments Toolkit extension, you can modify the following settings in your Visual Studio Code settings:
 
 1. **Base Length**: Defines the base length for comments. The default value is 40.
-   ```json
-   "commentToolkit.baseLength": 40
-
 2. **Separator**: Specifies the character used as a separator in comments. The default value is '='.
 
-To change these settings, follow these steps:
+**To change these settings, follow these steps:**
 
 1. Open the Command Palette (`Ctrl+Shift+P` on Windows).
 2. Type `Preferences: Open Settings` and select it.
