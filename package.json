@@ -2,7 +2,7 @@
 	"name": "comments-toolkit",
 	"displayName": "Comments Toolkit",
 	"description": "Completions to create some fancy comments in Visual Studio Code",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"engines": {
 		"vscode": "^1.93.0"
 	},
