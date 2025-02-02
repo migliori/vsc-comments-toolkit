@@ -81,6 +81,8 @@ let { baseLength, separator } = getConfiguration();
 
 const commentStyles = {
     "abap": { singleLine: { start: "*", end: "" }, multiLine: { start: "/*", end: "*/" } },
+    "ahk": { singleLine: { start: ";", end: "" }, multiLine: { start: "/*", end: "*/" } },
+    "ahk2": { singleLine: { start: ";", end: "" }, multiLine: { start: "/*", end: "*/" } },
     "bat": { singleLine: { start: "REM", end: "" }, multiLine: false },
     "bibtex": { singleLine: { start: "%", end: "" }, multiLine: false },
     "clojure": { singleLine: { start: ";;", end: "" }, multiLine: false },
@@ -112,8 +114,8 @@ const commentStyles = {
     "juliamarkdown": { singleLine: { start: "<!--", end: "-->" }, multiLine: { start: "<!--", end: "-->" } },
     "latex": { singleLine: { start: "%", end: "" }, multiLine: false },
     "less": { singleLine: { start: "//", end: "" }, multiLine: { start: "/*", end: "*/" } },
-    "log": { singleLine: { start: "#", end: "" }, multiLine: false }
-,    "lua": { singleLine: { start: "--", end: "" }, multiLine: { start: "--[[", end: "]]" } },
+    "log": { singleLine: { start: "#", end: "" }, multiLine: false },
+    "lua": { singleLine: { start: "--", end: "" }, multiLine: { start: "--[[", end: "]]" } },
     "makefile": { singleLine: { start: "#", end: "" }, multiLine: false },
     "markdown": { singleLine: { start: "<!--", end: "-->" }, multiLine: { start: "<!--", end: "-->" } },
     "objective-c": { singleLine: { start: "//", end: "" }, multiLine: { start: "/*", end: "*/" } },

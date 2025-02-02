@@ -42,3 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced `detectLanguageAtPosition` function for better language detection.
 - Improved `interpretSpaces` function to handle custom space markers.
 - Enhanced `calculateContentLength` function to process placeholders and spaces.
+
+## v1.2.1
+
+- add AutoHotkey support
