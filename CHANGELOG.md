@@ -46,3 +46,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## v1.2.1
 
 - add AutoHotkey support
+
+## v1.2.2
+
+- **Fixed IntelliSense interference**: Improved completion provider to preserve native word suggestions
+- **Enhanced provider logic**: Completion items now only trigger when explicitly typing "comm" to avoid interfering with default IntelliSense
+- **Better coexistence**: Extension now uses `CompletionList` instead of array to allow multiple providers to work together

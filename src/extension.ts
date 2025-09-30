@@ -618,7 +618,24 @@ export function activate(context: vscode.ExtensionContext) {
             languages,
             {
                 provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
-                    return getCompletionItems(document, position);
+                    // Vérifier si l'utilisateur a tapé "comm" ou "comm::"
+                    const lineText = document.lineAt(position).text;
+                    const textBeforeCursor = lineText.substring(0, position.character);
+
+                    // Ne proposer nos suggestions que si l'utilisateur tape explicitement "comm"
+                    // Cela évite d'interférer avec les suggestions de mots natives
+                    const wordRange = document.getWordRangeAtPosition(position);
+                    const currentWord = wordRange ? document.getText(wordRange) : '';
+
+                    // Déclencher seulement si on tape "comm" au début d'un mot ou après "comm::"
+                    if (!currentWord.startsWith('comm') && !textBeforeCursor.includes('comm::')) {
+                        return undefined; // Laisser les autres providers gérer (suggestions de mots natives, etc.)
+                    }
+
+                    const items = getCompletionItems(document, position);
+                    // Retourner une CompletionList avec isIncomplete=false pour indiquer que
+                    // d'autres providers peuvent aussi fournir des suggestions
+                    return new vscode.CompletionList(items || [], false);
                 }
             },
             'comm'
