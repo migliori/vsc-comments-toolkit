@@ -55,6 +55,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## v1.2.3
 
-- **Optimized package size**: Improved `.vscodeignore` to exclude unnecessary files (node_modules, development files)
-- **Performance improvement**: Reduced extension size from 1194 files to 10 files (86KB)
+- **Optimized package size**: Improved `.vscodeignore` to exclude unnecessary files
+- **Performance improvement**: Reduced extension size
 - **Faster installation**: Extension now packages and installs much faster
