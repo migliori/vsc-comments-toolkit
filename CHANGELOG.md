@@ -52,3 +52,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Fixed IntelliSense interference**: Improved completion provider to preserve native word suggestions
 - **Enhanced provider logic**: Completion items now only trigger when explicitly typing "comm" to avoid interfering with default IntelliSense
 - **Better coexistence**: Extension now uses `CompletionList` instead of array to allow multiple providers to work together
+
+## v1.2.3
+
+- **Optimized package size**: Improved `.vscodeignore` to exclude unnecessary files (node_modules, development files)
+- **Performance improvement**: Reduced extension size from 1194 files to 10 files (86KB)
+- **Faster installation**: Extension now packages and installs much faster
