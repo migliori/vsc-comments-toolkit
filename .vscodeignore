@@ -2,7 +2,6 @@
 .vscode-test/**
 out/test/**
 src/**
-node_modules/**
 .gitignore
 vsc-extension-quickstart.md
 **/tsconfig.json
@@ -13,3 +12,20 @@ vsc-extension-quickstart.md
 *.vsix
 package-lock.json
 MEMO.md
+node_modules/@types/**
+node_modules/rimraf/**
+node_modules/tslint/**
+node_modules/typescript/**
+node_modules/vscode/**
+node_modules/@types/**
+node_modules/mocha/**
+node_modules/sinon/**
+node_modules/lodash/**
+# Exclude tree-sitter development/test files
+node_modules/tree-sitter/vendor/**
+node_modules/tree-sitter/test/**
+node_modules/tree-sitter-html/test/**
+node_modules/tree-sitter-html/queries/**
+node_modules/tree-sitter-html/src/**
+node_modules/tree-sitter-html/grammar.js
+node_modules/tree-sitter-html/binding.gyp

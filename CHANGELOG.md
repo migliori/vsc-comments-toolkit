@@ -58,3 +58,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Optimized package size**: Improved `.vscodeignore` to exclude unnecessary files
 - **Performance improvement**: Reduced extension size
 - **Faster installation**: Extension now packages and installs much faster
+
+## v1.2.4
+
+- **Fixed missing dependencies**: Included runtime dependencies in package distribution
+
+## v1.3.0
+
+- **Enhanced icon display**: Improved completion item icons using both CompletionItemKind and Codicon syntax
+- **Visual improvements**: Added distinct Codicon icons in descriptions for better visual identification
+- **Icon consistency**: Each comment type now has appropriate CompletionItemKind icons replacing default squares
+- **Better user experience**: Completion items now display with proper icons and enhanced visual clarity

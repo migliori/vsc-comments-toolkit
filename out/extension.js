@@ -9,7 +9,8 @@
  * Features:
  * - Supports multiple programming languages with their respective comment styles.
  * - Provides predefined comment patterns such as sections, subsections, simple comments, blocks, and TODOs.
- * - Automatically adjusts the length of comment lines to maintain a consistent format.
+ * - Automatically adjusts the length of comment lines t                   'simple': { desc: 'Simple Comment', detail: 'Creates a single-line comment', icon: '$(comment)' },          'block': { desc: 'Block Comment', detail: 'Creates a multi-line block comment', icon: '$(bracket)' },          'block': { desc: 'Block Comment', detail: 'Creates a multi-line block comment', icon: '$(bracket)' },
+            'simple': { desc: 'Simple Comment', detail: 'Creates a single-line comment', icon: '$(comment)' },          'block': { desc: 'Block Comment', detail: 'Creates a multi-line block comment', icon: '$(bracket)' },            'simple': { desc: 'Simple Comment', detail: 'Creates a single-line comment', icon: '$(comment)' },          'block': { desc: 'Block Comment', detail: 'Creates a multi-line block comment', icon: '$(bracket)' },            'simple': { desc: 'Simple Comment', detail: 'Creates a single-line comment', icon: '$(comment)' },     'section-header': { desc: 'Section Header', detail: 'Creates only the section header block', icon: '$(symbol-namespace)' },            'section-footer': { desc: 'Section Footer', detail: 'Creates only the section footer block', icon: '$(symbol-namespace)' },m            'subsection-header': { desc: 'Subsection Header', detail: 'Creates only the subsection header block', icon: '$(symbol-class)' },i            'block': { desc: 'Block Comment', detail: 'Creates a multi-line block comment', icon: '$(bracket)' },            'simple': { desc: 'Simple Comment', detail: 'Creates a single-line comment', icon: '$(comment)' },ain a consistent format.
  * - Registers a single completion item provider for all supported languages to offer comment pattern suggestions.
  * - Dynamically loads and caches generated comment patterns to avoid redundant computations.
  * - Logs messages with different log levels (info, warning, error) for better debugging and monitoring.
@@ -59,7 +60,18 @@ const vscode = __importStar(require("vscode"));
 const logger_1 = require("./logger");
 const tree_sitter_1 = __importDefault(require("tree-sitter"));
 const tree_sitter_html_1 = __importDefault(require("tree-sitter-html"));
-const lodash_1 = require("lodash");
+/**
+ * Simple debounce implementation to replace lodash
+ */
+function debounce(func, wait) {
+    let timeout;
+    return (...args) => {
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+        timeout = setTimeout(() => func(...args), wait);
+    };
+}
 /**
 *
 * Imports and Initialization
@@ -535,23 +547,62 @@ function getCompletionItems(document, position) {
             language = detectLanguageAtPosition(document.getText(), position);
         }
         log('info', `Detected language: ${language}`);
-        // if completionItemsMap has the language, return it
-        if (completionItemsMap[language]) {
-            log('info', `Returning cached completion items for ${language}`);
-            return completionItemsMap[language];
+        // Calculer le range à remplacer (le "comm:" qui a déclenché)
+        const lineText = document.lineAt(position).text;
+        const textBeforeCursor = lineText.substring(0, position.character);
+        const commIndex = textBeforeCursor.lastIndexOf('comm:');
+        let replaceRange;
+        if (commIndex !== -1) {
+            const startPos = new vscode.Position(position.line, commIndex);
+            replaceRange = new vscode.Range(startPos, position);
         }
-        // Generate completion items
+        // Generate completion items (utiliser le cache pour les patterns générés)
         let newCompletionItems = [];
-        for (const patternKey in globalPatterns) {
+        // Mapping des patterns avec leurs descriptions et icônes
+        const patternDescriptions = {
+            'section': { desc: '$(comment-discussion-sparkle) Full Section Block', detail: 'Creates a complete section with header, content area, and footer', kind: vscode.CompletionItemKind.Constant },
+            'section-header': { desc: '$(comment-discussion-sparkle) Section Header', detail: 'Creates only the section header block', kind: vscode.CompletionItemKind.Constant },
+            'section-footer': { desc: '$(comment-discussion-sparkle) Section Footer', detail: 'Creates only the section footer block', kind: vscode.CompletionItemKind.Constant },
+            'subsection': { desc: '$(comment-discussion) Full Subsection Block', detail: 'Creates a complete subsection with header, content area, and footer', kind: vscode.CompletionItemKind.Constant },
+            'subsection-header': { desc: '$(comment-discussion) Subsection Header', detail: 'Creates only the subsection header block', kind: vscode.CompletionItemKind.Constant },
+            'subsection-footer': { desc: '$(comment-discussion) Subsection Footer', detail: 'Creates only the subsection footer block', kind: vscode.CompletionItemKind.Constant },
+            'block': { desc: '$(code-review) Block Comment', detail: 'Creates a multi-line block comment', kind: vscode.CompletionItemKind.Constant },
+            'simple': { desc: '$(comment) Simple Comment', detail: 'Creates a single-line comment', kind: vscode.CompletionItemKind.Constant },
+            'todo': { desc: '$(checklist) TODO List', detail: 'Creates a formatted TODO list block', kind: vscode.CompletionItemKind.Constant }
+        };
+        // Ordre des patterns pour l'affichage
+        const patternOrder = [
+            'section', 'section-header', 'section-footer',
+            'subsection', 'subsection-header', 'subsection-footer',
+            'block', 'simple', 'todo'
+        ];
+        for (const patternKey of patternOrder) {
             const pattern = globalPatterns[patternKey];
+            // Utiliser le cache pour generateCommentPattern (opération coûteuse)
             const commentPattern = generateCommentPattern(language, patternKey, pattern);
-            const item = new vscode.CompletionItem(`comm::${patternKey}`, vscode.CompletionItemKind.Snippet);
-            item.documentation = new vscode.MarkdownString(replacePlaceholders(commentPattern));
+            const patternInfo = patternDescriptions[patternKey];
+            // Créer un nouvel item à chaque fois pour le bon range
+            const item = new vscode.CompletionItem(`comm::${patternKey}`, (patternInfo === null || patternInfo === void 0 ? void 0 : patternInfo.kind) || vscode.CompletionItemKind.Snippet);
+            // Utiliser l'icône Codicon dans le label
+            item.label = (patternInfo === null || patternInfo === void 0 ? void 0 : patternInfo.desc) || `📝 ${patternKey}`;
+            item.detail = (patternInfo === null || patternInfo === void 0 ? void 0 : patternInfo.detail) || `Generate ${patternKey} comment pattern`;
+            // Améliorer la prévisualisation avec plus de contexte
+            const previewMarkdown = `**${(patternInfo === null || patternInfo === void 0 ? void 0 : patternInfo.desc) || patternKey}**\n\n` +
+                `*${(patternInfo === null || patternInfo === void 0 ? void 0 : patternInfo.detail) || 'Comment pattern'}*\n\n` +
+                `**Preview for \`${language}\`:**\n\n` +
+                replacePlaceholders(commentPattern);
+            item.documentation = new vscode.MarkdownString(previewMarkdown);
             item.insertText = new vscode.SnippetString(commentPattern);
+            // Faire en sorte que l'item remplace "comm:" au lieu de s'ajouter après
+            if (replaceRange) {
+                item.range = replaceRange;
+            }
+            // Filtrer sur "comm::patternKey" pour que ça matche bien
+            item.filterText = `comm::${patternKey}`;
+            item.sortText = `${patternOrder.indexOf(patternKey).toString().padStart(2, '0')}_${patternKey}`; // Assurer l'ordre défini
             newCompletionItems.push(item);
         }
         log('info', `*** Generated comment patterns for ${language} ***`);
-        completionItemsMap[language] = newCompletionItems;
         return newCompletionItems;
     }
     catch (error) {
@@ -583,26 +634,29 @@ function activate(context) {
         // Extract all language keys from commentStyles
         const languages = Object.keys(commentStyles).map(language => ({ language, scheme: 'file' })).concat(Object.keys(commentStyles).map(language => ({ language, scheme: 'untitled' })));
         vscode.languages.registerCompletionItemProvider(languages, {
-            provideCompletionItems(document, position) {
-                // Vérifier si l'utilisateur a tapé "comm" ou "comm::"
+            provideCompletionItems(document, position, token, context) {
                 const lineText = document.lineAt(position).text;
                 const textBeforeCursor = lineText.substring(0, position.character);
-                // Ne proposer nos suggestions que si l'utilisateur tape explicitement "comm"
-                // Cela évite d'interférer avec les suggestions de mots natives
-                const wordRange = document.getWordRangeAtPosition(position);
-                const currentWord = wordRange ? document.getText(wordRange) : '';
-                // Déclencher seulement si on tape "comm" au début d'un mot ou après "comm::"
-                if (!currentWord.startsWith('comm') && !textBeforeCursor.includes('comm::')) {
-                    return undefined; // Laisser les autres providers gérer (suggestions de mots natives, etc.)
+                // Debug logs
+                log('info', `Provider called - TriggerKind: ${context.triggerKind}, TriggerChar: "${context.triggerCharacter}", TextBefore: "${textBeforeCursor}"`);
+                // Déclencher seulement dans les bonnes conditions :
+                // 1. Trigger ':' après "comm" -> "comm:" (TriggerKind.TriggerCharacter = 1)
+                // 2. Trigger manuel (Ctrl+Space) quand le curseur est après "comm:" (TriggerKind.Invoke = 0)
+                const isColonAfterComm = context.triggerCharacter === ':' && textBeforeCursor.endsWith('comm:');
+                const isManualAfterComm = context.triggerKind === 0 && textBeforeCursor.endsWith('comm:');
+                log('info', `Conditions - isColonAfterComm: ${isColonAfterComm}, isManualAfterComm: ${isManualAfterComm}`);
+                if (!(isColonAfterComm || isManualAfterComm)) {
+                    log('info', 'Conditions not met, returning undefined');
+                    return undefined;
                 }
+                log('info', `Getting completion items for: "${textBeforeCursor}"`);
                 const items = getCompletionItems(document, position);
-                // Retourner une CompletionList avec isIncomplete=false pour indiquer que
-                // d'autres providers peuvent aussi fournir des suggestions
                 return new vscode.CompletionList(items || [], false);
             }
-        }, 'comm');
+        }, ':' // Trigger sur ':' pour "comm:"
+        );
         // Debounce configuration change handler
-        const handleConfigurationChange = (0, lodash_1.debounce)(() => {
+        const handleConfigurationChange = debounce(() => {
             Object.keys(completionItemsMap).forEach(key => delete completionItemsMap[key]);
             patternCache.clear();
             const config = getConfiguration();
